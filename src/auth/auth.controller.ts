@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CurrentUser } from '../common/decorators/current-user.decorator.js';
 import type { AuthUser } from '../common/decorators/current-user.decorator.js';
@@ -7,6 +8,7 @@ import { AuthService } from './auth.service.js';
 import { LoginDto } from './dto/login.dto.js';
 import { RegisterDto } from './dto/register.dto.js';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -24,6 +26,7 @@ export class AuthController {
   }
 
   @Get('me')
+  @ApiBearerAuth()
   me(@CurrentUser() user: AuthUser) {
     return this.authService.me(user.id);
   }

@@ -9,12 +9,16 @@ import {
   Query,
 } from '@nestjs/common';
 
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
 import { CurrentUser } from '../common/decorators/current-user.decorator.js';
 import type { AuthUser } from '../common/decorators/current-user.decorator.js';
 import { CreatePlanoAnoMesDto } from './dto/create-plano-ano-mes.dto.js';
 import { UpdatePlanoAnoMesDto } from './dto/update-plano-ano-mes.dto.js';
 import { PlanoAnoMesesService } from './plano-ano-meses.service.js';
 
+@ApiTags('plano-ano-meses')
+@ApiBearerAuth()
 @Controller('plano-ano-meses')
 export class PlanoAnoMesesController {
   constructor(private readonly planoAnoMesesService: PlanoAnoMesesService) {}

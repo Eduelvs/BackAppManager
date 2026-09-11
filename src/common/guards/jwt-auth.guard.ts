@@ -31,6 +31,9 @@ export class JwtAuthGuard implements CanActivate {
     if (isPublic) return true;
 
     const request = context.switchToHttp().getRequest<Request & { user?: AuthUser }>();
+    const path = request.originalUrl ?? request.url;
+    if (path.startsWith('/api')) return true;
+
     const token = this.extractToken(request);
     if (!token) {
       throw new UnauthorizedException('Token de autenticação ausente.');
