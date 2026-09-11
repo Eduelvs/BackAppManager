@@ -16,7 +16,8 @@ export class PlanosService {
   findAll(userId: string) {
     return this.planosRepo.find({
       where: { id_user: userId },
-      order: { nome: 'ASC' },
+      relations: { anos: { meses: true } },
+      order: { nome: 'ASC', anos: { ano: 'ASC', meses: { mes: 'ASC' } } },
     });
   }
 
